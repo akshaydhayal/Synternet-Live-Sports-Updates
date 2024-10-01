@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { AlertCircle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MoonIcon, SunIcon } from "lucide-react";
+import Header from "@/components/Header";
 
 const Navbar = ({ toggleTheme, isDarkMode, setSelectedMatch }) => {
   return (
@@ -195,6 +196,7 @@ const SportsUpdate = () => {
   return (
     <div className={`min-h-screen ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
       <Navbar toggleTheme={toggleTheme} isDarkMode={isDarkMode} setSelectedMatch={setSelectedMatch} />
+      <Header/>
       <div className="container mx-auto p-4">
         {selectedMatch ? (
           <div>
