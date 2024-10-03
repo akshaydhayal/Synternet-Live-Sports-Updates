@@ -54,7 +54,9 @@ function getIat() {
   return Math.round(Date.now() / 1000);
 }
 
-function signJwt(payload: any, keyPair: KeyPair): string {
+//@ts-expect-error The payload can have a flexible structure
+function signJwt(payload, keyPair: KeyPair): string {
+  // function signJwt(payload: any, keyPair: KeyPair): string {
   const header = {
     typ: "JWT",
     alg: "ed25519-nkey",
