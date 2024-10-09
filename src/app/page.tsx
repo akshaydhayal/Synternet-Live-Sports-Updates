@@ -10,17 +10,21 @@ import { Button } from "@/components/ui/button";
 // ... (keep the Navbar and MatchDetails components as they are)
 
 //@ts-expect-error states
-const Navbar = ({ toggleTheme, isDarkMode, setSelectedMatch, setSelectedMatchId }) => {
+const Navbar = ({ toggleTheme, isDarkMode, setSelectedMatch, setSelectedMatchId, setShowGenMatch }) => {
   return (
     <nav className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-2 px-4">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-2xl font-bold">CricketLive</h1>
         <div className="flex items-center gap-4">
-          <Button onClick={() => {
-            setSelectedMatch(null);
-            setSelectedMatchId(null);
-          }} className="bg-blue-700 hover:bg-blue-600 text-white">
-            Back to Live Matches
+          <Button
+            onClick={() => {
+              setSelectedMatch(null);
+              setSelectedMatchId(null);
+              setShowGenMatch(false);
+            }}
+            className="bg-blue-700 hover:bg-blue-600 text-white"
+          >
+            Back to All Live Matches
           </Button>
           <Button variant="ghost" size="icon" onClick={toggleTheme} className="text-white">
             {isDarkMode ? <SunIcon className="h-[1.2rem] w-[1.2rem]" /> : <MoonIcon className="h-[1.2rem] w-[1.2rem]" />}
@@ -71,7 +75,8 @@ const MatchDetails = ({ match, isDarkMode }) => {
                         <tr className="border-b dark:border-gray-600">
                           <td className="p-2 font-medium">{match.batsmanOne}</td>
                           <td className="p-2">{match.batsmanOneRun}</td>
-                          <td className="p-2">{match.batsmanOneBall?.replace(/[()]/g, "")}</td>
+                          {/* <td className="p-2">{match.batsmanOneBall?.replace(/[()]/g, "")}</td> */}
+                          <td className="p-2">{match.batsmanOneBall}</td>
                           <td className="p-2">0</td>
                           <td className="p-2">0</td>
                           <td className="p-2">{match.batsmanOneSR}</td>
@@ -79,7 +84,8 @@ const MatchDetails = ({ match, isDarkMode }) => {
                         <tr>
                           <td className="p-2 font-medium">{match.batsmanTwo}</td>
                           <td className="p-2">{match.batsmanTwoRun}</td>
-                          <td className="p-2">{match.batsmanTwoBall?.replace(/[()]/g, "")}</td>
+                          {/* <td className="p-2">{match.batsmanTwoBall?.replace(/[()]/g, "")}</td> */}
+                          <td className="p-2">{match.batsmanTwoBall}</td>
                           <td className="p-2">0</td>
                           <td className="p-2">0</td>
                           <td className="p-2">{match.batsmanTwoSR}</td>
@@ -133,6 +139,7 @@ const MatchDetails = ({ match, isDarkMode }) => {
 };
 
 
+
 const SportsUpdate = () => {
   const [liveMatches, setLiveMatches] = useState([]);
   const [liveMatchStats, setLiveMatchStats] = useState(null);
@@ -142,6 +149,7 @@ const SportsUpdate = () => {
   const [error, setError] = useState<null|string>(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [lastUpdated, setLastUpdated] = useState<null|string>(null);
+  const [showGenMatch,setShowGenMatch]=useState(false);
 
   const fetchLiveMatches = async () => {
     try {
@@ -199,52 +207,106 @@ const SportsUpdate = () => {
       </div>
     );
   }
-
+  console.log("show gen status: ",showGenMatch);
+  console.log("live matches : ",liveMatches);
+  console.log("live matches : ",liveMatchStats);
   return (
     <div className={`min-h-screen ${isDarkMode ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"}`}>
-      <Navbar toggleTheme={toggleTheme} isDarkMode={isDarkMode} setSelectedMatch={setSelectedMatch} setSelectedMatchId={setSelectedMatchId} />
+      <Navbar
+        toggleTheme={toggleTheme}
+        isDarkMode={isDarkMode}
+        setSelectedMatch={setSelectedMatch}
+        setSelectedMatchId={setSelectedMatchId}
+        setShowGenMatch={setShowGenMatch}
+      />
       <Header setLiveMatchStats={setLiveMatchStats} />
       <div className="container mx-auto p-4">
         {lastUpdated && <div className={`text-center mb-4 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>Live scores last updated: {lastUpdated}</div>}
+        {/* {showGenMatch && <MatchDetails match={liveMatchStats.generatedMatch.liveMatchStats} isDarkMode={isDarkMode} />} */}
         {selectedMatch ? (
           <MatchDetails match={selectedMatch} isDarkMode={isDarkMode} />
         ) : (
           <div>
             <h1 className={`text-4xl font-bold mb-8 text-center ${isDarkMode ? "text-white" : "text-gray-900"}`}>Live Cricket Matches</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {liveMatches.map((match:{id:string,title:string,
-               teams:{team:string,run:string}[],
-               timeAndPlace:{date:string,time:string,place:string},overview:string}) => (
-                <Card
-                  key={match.id}
-                  className={`cursor-pointer hover:shadow-lg transition-shadow duration-200 ${
-                    isDarkMode ? "bg-gray-800 hover:bg-gray-700 text-white" : "bg-white hover:bg-gray-50 text-gray-900"
-                  }`}
-                  onClick={() => setSelectedMatchId(match.id)}
-                >
-                  <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500">
-                    <CardTitle className="text-white">{match.title}</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="font-semibold text-lg mb-2">
-                      {match.teams[0]?.team} vs {match.teams[1]?.team}
-                    </p>
-                    <p className="font-medium">
-                      {match.teams[0]?.team}: <span className="text-blue-500">{match.teams[0]?.run}</span>
-                    </p>
-                    <p className="font-medium">
-                      {match.teams[1]?.team}: <span className="text-blue-500">{match.teams[1]?.run}</span>
-                    </p>
-                    <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"} mt-2`}>
-                      {match.timeAndPlace.date} {match.timeAndPlace.time} {match.timeAndPlace.place}
-                    </p>
-                    <p className="text-sm font-semibold mt-2 text-green-500">{match.overview}</p>
-                  </CardContent>
-                </Card>
-              ))}
+              {liveMatches.map(
+                (match: {
+                  id: string;
+                  title: string;
+                  teams: { team: string; run: string }[];
+                  timeAndPlace: { date: string; time: string; place: string };
+                  overview: string;
+                }) => (
+                  <Card
+                    key={match.id}
+                    className={`cursor-pointer hover:shadow-lg transition-shadow duration-200 ${
+                      isDarkMode ? "bg-gray-800 hover:bg-gray-700 text-white" : "bg-white hover:bg-gray-50 text-gray-900"
+                    }`}
+                    onClick={() => setSelectedMatchId(match.id)}
+                  >
+                    <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500">
+                      <CardTitle className="text-white">{match.title}</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="font-semibold text-lg mb-2">
+                        {match.teams[0]?.team} vs {match.teams[1]?.team}
+                      </p>
+                      <p className="font-medium">
+                        {match.teams[0]?.team}: <span className="text-blue-500">{match.teams[0]?.run}</span>
+                      </p>
+                      <p className="font-medium">
+                        {match.teams[1]?.team}: <span className="text-blue-500">{match.teams[1]?.run}</span>
+                      </p>
+                      <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"} mt-2`}>
+                        {match.timeAndPlace.date} {match.timeAndPlace.time} {match.timeAndPlace.place}
+                      </p>
+                      <p className="text-sm font-semibold mt-2 text-green-500">{match.overview}</p>
+                    </CardContent>
+                  </Card>
+                )
+              )}
+
+              {!showGenMatch &&
+                liveMatchStats?.generatedMatch?.liveMatchDetails.map(
+                  (match: {
+                    id: string;
+                    title: string;
+                    teams: { team: string; run: string }[];
+                    timeAndPlace: { date: string; time: string; place: string };
+                    overview: string;
+                  }) => (
+                    <Card
+                      key={match.id}
+                      className={`cursor-pointer hover:shadow-lg transition-shadow duration-200 ${
+                        isDarkMode ? "bg-gray-800 hover:bg-gray-700 text-white" : "bg-white hover:bg-gray-50 text-gray-900"
+                      }`}
+                      onClick={() => setShowGenMatch(true)}
+                    >
+                      <CardHeader className="bg-gradient-to-r from-blue-500 to-purple-500">
+                        <CardTitle className="text-white">{match.title}</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="font-semibold text-lg mb-2">
+                          {match.teams[0]?.team} vs {match.teams[1]?.team}
+                        </p>
+                        <p className="font-medium">
+                          {match.teams[0]?.team}: <span className="text-blue-500">{match.teams[0]?.run}</span>
+                        </p>
+                        <p className="font-medium">
+                          {match.teams[1]?.team}: <span className="text-blue-500">{match.teams[1]?.run}</span>
+                        </p>
+                        <p className={`text-sm ${isDarkMode ? "text-gray-400" : "text-gray-500"} mt-2`}>
+                          {match.timeAndPlace.date} {match.timeAndPlace.time} {match.timeAndPlace.place}
+                        </p>
+                        <p className="text-sm font-semibold mt-2 text-green-500">{match.overview}</p>
+                      </CardContent>
+                    </Card>
+                  )
+                )}
             </div>
           </div>
         )}
+        {showGenMatch && <MatchDetails match={liveMatchStats.generatedMatch.liveMatchStats} isDarkMode={isDarkMode} />}
       </div>
     </div>
   );
