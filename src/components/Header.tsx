@@ -68,7 +68,7 @@ const Header = ({ setLiveMatchStats }) => {
           <p className="text-yellow-300">● Fetched Live News updates</p>
         ) : (
           <div className="flex justify-center items-center gap-3 text-yellow-300">
-            ○ Fetching Live News
+            ○ Fetching Live Match Updates
             <Loader2 className="h-8 w-8 text-yellow-300 animate-spin" />
           </div>
         )}
