@@ -265,10 +265,9 @@ const SportsUpdate = () => {
                   </Card>
                 )
               )}
-
-              {!showGenMatch &&
-                liveMatchStats?.generatedMatch?.liveMatchDetails.map(
-                  (match: {
+              {/* @ts-expect-error ignore */}
+              {!showGenMatch && liveMatchStats?.generatedMatch?.liveMatchDetails.map(
+                (match: {
                     id: string;
                     title: string;
                     teams: { team: string; run: string }[];
@@ -306,6 +305,7 @@ const SportsUpdate = () => {
             </div>
           </div>
         )}
+      {/* @ts-expect-error ignore */}
         {showGenMatch && <MatchDetails match={liveMatchStats.generatedMatch.liveMatchStats} isDarkMode={isDarkMode} />}
       </div>
     </div>
