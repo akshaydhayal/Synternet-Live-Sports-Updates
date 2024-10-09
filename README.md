@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Synternet Live Cricket Match Stats
 
-## Getting Started
+Live Project Link: [https://synternet-live-sports-updates.vercel.app/](https://synternet-live-sports-updates.vercel.app/)
 
-First, run the development server:
+## Description
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Cricket Live is a dynamic web application that fetches and displays real-time match updats from Cicket API, leveraging Synternet for live data streaming. Match Updates are published to Synternet data streams at regular 1 minute intervals from a EC2 Server, ensuring users receive the latest stats in real time. With an intuitive interface that supports both dark and light modes, CricketLive ensures an engaging user experience, whether you're a casual fan or a dedicated follower of the sport.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Features
+- **Live Match Updates Publishing**: Live Headlines from a Cricket API are published every minute through a EC2 Server, providing real-time updates.
+- **Client Subscribes to Synternet Stream:**: Utilizes Synternet to subscribe to live Cricket Match Stats.
+- **Live Match Updates:**: Provides real-time scores and updates for ongoing cricket matches. Displays match status (live/ended) and key moments.
+- **Match Details View:**: Clicking on a match opens detailed stats, including player performance (batsmen and bowlers). Shows individual player statistics like runs, balls faced, and strike rate for batsmen, and overs, runs conceded, and wickets taken for bowlers.
+- **Real-Time Updates:**: The app dynamically updates the feed without needing a page reload, offering a continuous flow of news as it is published to the data stream.
+- **User-Friendly Interface:**: Intuitive navigation with a sleek, dark/light mode toggle.The app dynamically updates the feed without needing a page reload, offering a continuous flow of news as it is published to the data stream.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Website Demo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![Mission Dashboard](https://github.com/akshaydhayal/Synternet-Live-Sports-Updates/blob/main/Create-Next-App%20(1).png)
 
-## Learn More
+*Figure 1: All Live Matches Happening*
+![Mission Dashboard](https://github.com/akshaydhayal/Synternet-Live-Sports-Updates/blob/main/Create-Next-App%20(2).png)
 
-To learn more about Next.js, take a look at the following resources:
+*Figure 2: Live Match Stats Page*
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-## Deploy on Vercel
+## Video Demo:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Technologies Used
+
+- **Frontend**: Next.js, React,  Tailwind CSS, Lucide Icons
+- **Live streams**: Synternet, EC2 Server
+  
+## Synternet Streams Used
+
+- **Published Stream**: stark.sports.data
+- **Subscribed streams**: stark.sports.data
