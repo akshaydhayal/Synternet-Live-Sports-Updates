@@ -26,7 +26,7 @@ Cricket Live is a dynamic web application that fetches and displays real-time ma
 
 
 ## Video Demo:
-
+https://www.loom.com/share/1113f9f485d24e949d135f1d3b3f7417?sid=a92a807f-a537-425f-b0f0-b3220bcc7c03
 
 ## Technologies Used
 
