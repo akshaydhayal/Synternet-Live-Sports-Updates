@@ -165,13 +165,21 @@ const SportsUpdate = () => {
     }
   };
 
+  // useEffect(() => {
+  //   fetchLiveMatches();
+  //   const intervalId = setInterval(() => {
+  //     setLastUpdated(new Date().toLocaleString());
+  //   }, 60000); // Update every minute
+
+  //   return () => clearInterval(intervalId);
+  // }, []);
   useEffect(() => {
     fetchLiveMatches();
-    const intervalId = setInterval(() => {
-      setLastUpdated(new Date().toLocaleString());
-    }, 60000); // Update every minute
+    // const intervalId = setInterval(() => {
+    //   setLastUpdated(new Date().toLocaleString());
+    // }, 60000); // Update every minute
 
-    return () => clearInterval(intervalId);
+    // return () => clearInterval(intervalId);
   }, []);
 
   useEffect(() => {
@@ -219,7 +227,7 @@ const SportsUpdate = () => {
         setSelectedMatchId={setSelectedMatchId}
         setShowGenMatch={setShowGenMatch}
       />
-      <Header setLiveMatchStats={setLiveMatchStats} />
+      <Header setLiveMatchStats={setLiveMatchStats} setLastUpdated={setLastUpdated} />
       <div className="container mx-auto p-4">
         {lastUpdated && <div className={`text-center mb-4 ${isDarkMode ? "text-gray-300" : "text-gray-700"}`}>Live scores last updated: {lastUpdated}</div>}
         {/* {showGenMatch && <MatchDetails match={liveMatchStats.generatedMatch.liveMatchStats} isDarkMode={isDarkMode} />} */}
@@ -267,7 +275,7 @@ const SportsUpdate = () => {
               )}
               {/* @ts-expect-error ignore */}
               {!showGenMatch && liveMatchStats?.generatedMatch?.liveMatchDetails.map(
-                (match: {
+                  (match: {
                     id: string;
                     title: string;
                     teams: { team: string; run: string }[];
@@ -305,7 +313,7 @@ const SportsUpdate = () => {
             </div>
           </div>
         )}
-      {/* @ts-expect-error ignore */}
+        {/* @ts-expect-error ignore */}
         {showGenMatch && <MatchDetails match={liveMatchStats.generatedMatch.liveMatchStats} isDarkMode={isDarkMode} />}
       </div>
     </div>
